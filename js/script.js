@@ -28,20 +28,28 @@ function start(){
 
 function displayNewWord(){
     STATE.currentWord = getNextWord();
-    console.log("New word:",STATE.currentWord);
-    document.querySelector("#next-word").innerHTML=STATE.currentWord;    
+    //console.log("New word:",STATE.currentWord);
+    document.querySelector("#next-word").innerHTML=STATE.currentWord;   
+    Watch.startWatch();
 }
 
 function checkWord(event){
     if((event.keyCode >= 65 && event.keyCode <= 90) || event.keyCode==192 ){
-        if (STATE.isCorrectLetter(event.key)) {
-            console.log(STATE.currentWord);
+        if (STATE.isCorrectLetter(event.key.toLowerCase())) {           
+           
             STATE.currentProgressWord++;
-            console.log(STATE.currentProgressWord);
-            console.log(STATE.currentWord.length);
+            
+            let leftToDo = (STATE.currentWord.slice(STATE.currentProgressWord));
+            let wroteAlready= (STATE.currentWord.slice(0,STATE.currentProgressWord));
+            let span="<span>"+wroteAlready+"</span>";
+
+            document.querySelector("#next-word").innerHTML=span+leftToDo; 
         }
-        console.log(STATE.isWordFinished);
-        
+        if (STATE.currentProgressWord==STATE.currentWord.length) {
+            console.log("Tiempo transcurido escribiendo "+STATE.currentWord+": "+Watch.stopWatch()/1000+"s");
+            STATE.currentProgressWord=0;
+            displayNewWord();
+        }
 
     }
 }
