@@ -45,7 +45,7 @@ function checkWord(event){
 
             document.querySelector("#next-word").innerHTML=span+leftToDo; 
         }
-        if (STATE.currentProgressWord==STATE.currentWord.length) {
+        if (STATE.isWordFinished()) {
             console.log("Tiempo transcurido escribiendo "+STATE.currentWord+": "+Watch.stopWatch()/1000+"s");
             STATE.currentProgressWord=0;
             displayNewWord();
